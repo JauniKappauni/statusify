@@ -1,6 +1,10 @@
 const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
 const ping = require('ping');
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
 const port = 3000;
 
 app.set('view engine', 'ejs');
@@ -12,9 +16,10 @@ const services = [
 ];
 
 function checkStatus() {
-    services.forEach((services) => {
-        ping.sys.probe(services.host, (isOnline) => {
-            services.status = isOnline ? "Online ✅" : "Offline ❌"
+    services.forEach((service) => {
+        ping.sys.probe(service.host, (isOnline) => {
+            service.status = isOnline ? "Online ✅" : "Offline ❌"
+            io.emit('statusupdate', services)
         })
     })
 }
@@ -25,4 +30,4 @@ app.get('/', (req, res) => {
     res.render('index', { services });
 });
 
-app.listen(port, () => console.log(`Server läuft auf http://localhost:${port}`));
+server.listen(port, () => console.log(`Server läuft auf http://localhost:${port}`));
