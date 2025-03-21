@@ -10,6 +10,12 @@
 <body>
     <div class="container text-center mt-5">
         <h1>Statusify</h1>
+        <p id="time">Current Time: </p>
+        <script>
+            var currentTime = new Date();
+            var Time = "Last Sync: " + currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds()
+            document.getElementById('time').innerHTML = Time;
+        </script>
         <table class="table table-bordered mt-4">
             <thead>
                 <tr>
