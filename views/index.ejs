@@ -14,7 +14,7 @@
         <script>
             function updateTime() {
                 var currentTime = new Date();
-                var Time = "Last Sync: " + currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + currentTime.getSeconds();
+                var Time = "Last Sync: " + currentTime.getHours() + ":" + currentTime.getMinutes() + ":" + String(currentTime.getSeconds()).padStart(2, "0");
                 document.getElementById('time').innerHTML = Time
             }
             setInterval(updateTime, 1000)
